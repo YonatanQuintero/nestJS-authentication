@@ -4,11 +4,14 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { IamModule } from './iam/iam.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    CoffeesModule,
-    UsersModule,
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'mysql',
@@ -21,6 +24,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         synchronize: true // Only for development, don't use in production
       })
     }),
+    CoffeesModule,
+    UsersModule,
+    IamModule,
   ],
   controllers: [AppController],
   providers: [AppService],
