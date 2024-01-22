@@ -18,10 +18,13 @@ import { PermissionsGuard } from './authorization/guards/permissions/permissions
 import { PolicyHandlerStorage } from './policies/policy-handlers.storage';
 import { FrameworkContributorPolicyHandler } from './policies/framework-contributor.policy';
 import { PoliciesGuard } from './authorization/guards/policies/policies.guard';
+import { ApiKeysService } from './authentication/api-keys.service';
+import { ApiKey } from 'src/users/api-keys/entities/api-key.entity';
+import { ApiKeyGuard } from './authentication/guards/api-key/api-key.guard';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, ApiKey]),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(redisConfig),
@@ -43,7 +46,9 @@ import { PoliciesGuard } from './authorization/guards/policies/policies.guard';
     AuthenticationService,
     RefreshTokenIdsStorage,
     PolicyHandlerStorage,
-    FrameworkContributorPolicyHandler
+    FrameworkContributorPolicyHandler,
+    ApiKeysService,
+    ApiKeyGuard
   ],
   controllers: [AuthenticationController]
 })

@@ -10,7 +10,10 @@ import { Permissions } from 'src/iam/authorization/decorators/permissions.decora
 import { Permission } from 'src/iam/authorization/permission.type';
 import { Policies } from 'src/iam/decorators/policies.decorator';
 import { FrameworkContributorPolicy } from 'src/iam/policies/framework-contributor.policy';
+import { AuthType } from 'src/iam/authentication/enums/auth-type.enum';
+import { Auth } from 'src/iam/authentication/decorators/auth.decorator';
 
+@Auth(AuthType.Bearer, AuthType.ApiKey)
 @Controller('coffees')
 export class CoffeesController {
 
